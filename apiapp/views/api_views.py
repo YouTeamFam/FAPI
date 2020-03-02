@@ -91,7 +91,7 @@ def login():
             })
         return y_login(user,user.broker_id)
     elif data['type']=='用户':
-        user = TUser.query.filter(or_(TUser.phone==data['phone'],TUser.u_name==data['username']), TUser.u_pwd==pwd).first()
+        user = TUser.query.filter(or_(TUser.phone==data['username'],TUser.u_name==data['username']), TUser.u_pwd==pwd).first()
         if not user:
             return jsonify({
                 'state': 3,
