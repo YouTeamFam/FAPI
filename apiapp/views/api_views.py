@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 
 from flask import Blueprint
+from sqlalchemy import or_
 
 from apiapp.models import *
 from tools.cache_ import *
@@ -38,7 +39,7 @@ def get_code():#获取验证码的接口
     })
 
 @userblue.route('/fdregister/',methods=["POST"])
-def fdregister():
+def fdregister():#房东注册
     resp = validate_json()#判断是否提供了json数据
     if resp:return resp#如果resp有数据，说明没有提供json数据
     resp = validate_params('name','sex','phone','username','pwd','code')#验证提供数据的完整性
@@ -69,42 +70,36 @@ def fdregister():
 def login():
     resp = validate_json()
     if resp: return resp
-    resp = validate_params('type','phone','pwd','username')
+    resp = validate_params('type','pwd','username')
     if resp:return resp
     data = request.get_json()
     pwd = hash_encode(data['pwd'])
     if data['type']=='房东':
-        user = TLandlord.query.filter_by(phone=data['phone'],l_pwd=pwd).first()
+        user = TLandlord.query.filter(or_(TLandlord.phone==data['username'],TLandlord.l_uname==data['username']),TLandlord.l_pwd==pwd).first()
         if not user:
-            user = TLandlord.query.filter_by(l_uname=data['username'], l_pwd=pwd).first()
-            if not user:
-                return jsonify({
-                    'state':0,
-                    'msg':'口令错误了'
-                })
+            return jsonify({
+                'state':0,
+                'msg':'口令错误了'
+            })
         return y_login(user,user.ld_id)
     elif data['type']=='经纪人':
-        user = TBroker.query.filter_by(phone=data['phone'], b_pwd=pwd).first()
+        user = TBroker.query.filter(or_(TBroker.phone==data['username'],TBroker.b_name==data['username']), TBroker.b_pwd==pwd).first()
         if not user:
-            user = TBroker.query.filter_by(b_uname=data['username'], b_pwd=pwd).first()
-            if not user:
-                return jsonify({
-                    'state': 0,
-                    'msg': '口令错误了'
-                })
+            return jsonify({
+                'state': 0,
+                'msg': '口令错误了'
+            })
         return y_login(user,user.broker_id)
     elif data['type']=='用户':
-        user = TUser.query.filter_by(phone=data['phone'], u_pwd=pwd).first()
+        user = TUser.query.filter(or_(TUser.phone==data['phone'],TUser.u_name==data['username']), TUser.u_pwd==pwd).first()
         if not user:
-            user = TUser.query.filter_by(u_name=data['username'], u_pwd=pwd).first()
-            if not user:
-                return jsonify({
-                    'state': 0,
-                    'msg': '口令错误了'
-                })
+            return jsonify({
+                'state': 3,
+                'msg': '口令错误了'
+            })
         return y_login(user, user.user_id)
 
-@userblue.route('/gfdpwd/',methods=["POST"])
+@userblue.route('/gfdpwd/',methods=["POST"])#房东修改密码
 def gpwd():#修改密码
     resp = validate_json()
     if resp:return resp

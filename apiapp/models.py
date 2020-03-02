@@ -122,7 +122,7 @@ class TBroker(db.Model):#经纪人
     years = db.Column(db.Integer, nullable=False)#从业年限
     company_id = db.Column(db.Integer,db.ForeignKey('t_company.company_id'), nullable=False, index=True)#关联的公司id
 
-    company = db.relationship('TCompany',  backref='t_brokers')
+    company = db.relationship('TCompany',  backref='t_brokers',lazy='immediate')
 
 class TSource(db.Model):#新房源信息
     __tablename__ = 't_source'
@@ -134,7 +134,7 @@ class TSource(db.Model):#新房源信息
     nearby = db.Column(db.String(255))
     region = db.Column(db.String(30), nullable=False)
     hu_type = db.Column(db.String(30))
-    price_s = db.Column(db.Float(asdecimal=True))
+    price_s = db.Column(db.Float())
     comm_name = db.Column(db.String(30))
     area = db.Column(db.String(30))
     sum_price = db.Column(db.String(30))
@@ -145,7 +145,7 @@ class TSource(db.Model):#新房源信息
     ch_state = db.Column(db.Integer)
     broker_id = db.Column(db.Integer,db.ForeignKey('t_broker.broker_id'), nullable=False, index=True)
 
-    broker = db.relationship('TBroker', backref='t_sources')
+    broker = db.relationship('TBroker', backref='t_sources',lazy='immediate')
 class TLandlord(db.Model):#房东信息表
     __tablename__ = 't_landlord'
 
@@ -192,11 +192,11 @@ class TSecondSource(db.Model):#二手房源信息表
     hu_type = db.Column(db.String(50))
     price_s = db.Column(db.Integer)
     comm_name = db.Column(db.String(30))
-    area = db.Column(db.Float(asdecimal=True))
-    sum_price = db.Column(db.Float(asdecimal=True))
-    dis_price = db.Column(db.Float(asdecimal=True))
+    area = db.Column(db.Float())
+    sum_price = db.Column(db.Float())
+    dis_price = db.Column(db.Float())
     sell_rent = db.Column(db.String(30))
-    rent_money = db.Column(db.Float(asdecimal=True))
+    rent_money = db.Column(db.Float())
     face = db.Column(db.String(30))
     details = db.Column(db.String(255))
     floors = db.Column(db.Integer)
@@ -208,8 +208,8 @@ class TSecondSource(db.Model):#二手房源信息表
     ld_id = db.Column(db.Integer,db.ForeignKey('t_landlord.ld_id'), index=True)
     title = db.Column(db.String(100))
 
-    broker = db.relationship('TBroker', backref='t_second_sources')
-    ld = db.relationship('TLandlord',  backref='t_second_sources')
+    broker = db.relationship('TBroker', backref='t_second_sources',lazy='immediate')
+    ld = db.relationship('TLandlord',  backref='t_second_sources',lazy='immediate')
 
 
 class TCheckHousetie(db.Model):#房源审核记录表

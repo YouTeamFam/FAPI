@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
 
+from apiapp.urls import init_api
 from apiapp.views.api_views import userblue
+from apiapp.views.kf import kfblue
 from tools import settings
 from tools.ext import init_ext
 
@@ -13,5 +15,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     init_ext(app)#关联数据库
     app.register_blueprint(userblue, url_prefix='/api/')
+    app.register_blueprint(kfblue, url_prefix='/api/')
+    init_api(app)
     CORS(app)
     return app

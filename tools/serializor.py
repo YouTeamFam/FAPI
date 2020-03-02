@@ -23,7 +23,6 @@ def _obj_to_json(obj: dict):
     # 模块的私有函数，不对外使用
     ret = obj.copy()
     for k, v in obj.items():
-        print(type(v))
         if isinstance(v, InstanceState):
             del ret[k]
         if isinstance(v, db.Model):  # apiapp.models.TUser

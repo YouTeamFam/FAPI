@@ -6,7 +6,7 @@ HOST ='localhost'
 PORT = 5000
 base_url = 'http://{}:{}'.format(HOST,PORT)
 data={
-    'phone':'15222244240',
+    'phone':'1522224424',
     'token':'814d020839f316c2b702108868dc2727',
     'username':'sunjian'
 }
@@ -32,12 +32,11 @@ class TestUserApi(TestCase):
         url = base_url+'/api/login/'
         resp = requests.post(url,json={
             'type':'房东',
-            'phone':'',
             'username':data['username'],
-            'pwd':'123456'
+            'pwd':'654321'
         })
         print(resp.json())
-    def test_d_login(self):#测试经纪人,15229106938,b7b103a177a5fa1ceb0cd1713c00e7a6
+    def test_d_login(self):#经纪人登录,15229106938,b7b103a177a5fa1ceb0cd1713c00e7a6
         url = base_url+'/api/login/'
         resp = requests.post(url,json={
             'type':'经纪人',
@@ -46,7 +45,7 @@ class TestUserApi(TestCase):
             'pwd':'123456'
         })
         print(resp.json())
-    def test_e_login(self):#测试经纪人,15229106938,b7b103a177a5fa1ceb0cd1713c00e7a6
+    def test_e_login(self):#用户登录,15229106938,b7b103a177a5fa1ceb0cd1713c00e7a6
         url = base_url+'/api/login/'
         resp = requests.post(url,json={
             'type':'用户',
@@ -62,10 +61,9 @@ class TestUserApi(TestCase):
             'pwd':'123456'
         },cookies={'token':data['token']})
         print(resp.json())
-    def test_f_upload_head(self):
+    def test_f_upload_head(self):#上传头像接口
         url = base_url+'/api/uphead/'
         resp = requests.post(url,files={
             'head':('yanzu.jpg',open('yanzu.jpg','rb'),'image/jpg')
         },cookies={'token':data['token']})
-
         print(resp.json())
