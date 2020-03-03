@@ -5,6 +5,7 @@ from apiapp.urls import init_api
 from apiapp.views.api_views import userblue
 from apiapp.views.jjr_view import jjrblue
 from apiapp.views.kf import kfblue
+from apiapp.views.user_api_view import pt_user_blue
 from tools import settings
 from tools.ext import init_ext
 
@@ -18,6 +19,7 @@ def create_app():
     app.register_blueprint(userblue, url_prefix='/api/')
     app.register_blueprint(kfblue, url_prefix='/api/')
     app.register_blueprint(jjrblue,url_prefix='/jirapi/')
+    app.register_blueprint(pt_user_blue,url_prefix='/api/')
     init_api(app)
     CORS(app)
     return app

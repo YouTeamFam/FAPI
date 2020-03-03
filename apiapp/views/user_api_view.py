@@ -45,7 +45,7 @@ def get_code():  #验证码接口
             'msg': '手机号不能为空'
         })
 
-@pt_user_blue.route('userregister/',methods=['POST'])
+@pt_user_blue.route('/userregister/',methods=['POST'])
 def user_register():  #用户注册接口
     resp = validate_json()#判断是否提供了json数据
     if resp:return resp#如果resp有数据，说明没有提供json数据
@@ -77,7 +77,7 @@ def user_register():  #用户注册接口
     })
 
 
-@pt_user_blue.route('userpwd/',methods=['POST'])
+@pt_user_blue.route('/userpwd/',methods=['POST'])
 def alter_user_pwd(): #修改密码接口
     resp = validate_json()#判断是否提供了json数据
     if resp:return resp#如果resp有数据，说明没有提供json数据
@@ -107,7 +107,7 @@ def alter_user_pwd(): #修改密码接口
     })
 
 
-@pt_user_blue.route('user_upload_head/',methods=['POST'])
+@pt_user_blue.route('/user_upload_head/',methods=['POST'])
 def userUpload_head(): #上传头像接口
     upload_file = request.files.get('head')  #获取头像
     token = request.cookies.get('token')   #从cookie中获取token

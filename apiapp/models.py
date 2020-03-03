@@ -179,7 +179,8 @@ class TUser(db.Model):#***********用户表
     times = db.Column(db.Integer)#分享次数
     code = db.Column(db.String(20))#推荐码
     code_num = db.Column(db.Integer)#推荐成功次数
-
+    mes_text = db.Column(db.String(50))
+    mes_title = db.Column(db.String(255))
 
 class TSecondSource(db.Model):#二手房源信息表
     __tablename__ = 't_second_source'
@@ -402,7 +403,7 @@ class TUserPost(db.Model):#用户发帖表
     content = db.Column(db.String, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('t_user.user_id'), nullable=False, index=True)
-
+    tie_pic = db.Column(db.String(500))
     user = db.relationship('TUser', backref='t_user_posts')
 
 class TUserComment(db.Model):#用户评论表

@@ -6,7 +6,7 @@ HOST ='localhost'
 PORT = 5000
 base_url = 'http://{}:{}'.format(HOST,PORT)
 data={
-    'phone':'1522224424',
+    'phone':'15222244240',
     'token':'814d020839f316c2b702108868dc2727',
     'username':'sunjian'
 }

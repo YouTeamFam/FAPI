@@ -33,9 +33,8 @@ def send_code(phone):
     request.add_query_param('SignName', "Disen工作室")  # 签名： 途中旅游 或 Disen工作室
     request.add_query_param('TemplateCode', "SMS_128646125")
     request.add_query_param('TemplateParam', '{"code":"%s"}' % code)
-
-    # response = client.do_action_with_exception(request)
-    # print(str(response, encoding='utf-8'))
+    response = client.do_action_with_exception(request)
+    print(str(response, encoding='utf-8'))
 
 def valid_code(phone, code):#验证手机号和验证码是否匹配
     # 1. 从缓存中读取phone中code(发送的code)
