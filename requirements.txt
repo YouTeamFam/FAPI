@@ -23,7 +23,7 @@ inflect==4.1.0
 itsdangerous==1.1.0
 Jinja2==2.10.3
 jmespath==0.9.4
-lxml==4.4.2
+lxml==4.9.1
 Mako==1.1.0
 MarkupSafe==1.1.1
 mysql-connector==2.2.9
